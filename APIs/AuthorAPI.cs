@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimplyBooks.DTOs;
+using SimplyBooks.Models;
 
 namespace SimplyBooks.APIs
 {
@@ -33,7 +34,7 @@ namespace SimplyBooks.APIs
                 .SingleOrDefault(author => author.Id == authorId);
                 if (author == null)
                 {
-                    return Results.NotFound("There was no author matching this id");
+                    return Results.NotFound($"No author was found with the following id: {authorId}");
                 }
                 return Results.Ok(new
                 {
@@ -66,13 +67,61 @@ namespace SimplyBooks.APIs
 
 
             // CREATE AUTHOR
+            app.MapPost("/authors", (SimplyBooksDbContext db, Author newAuthor) =>
+            {
+                Author addAuthor = new()
+                {
+                    FirstName = newAuthor.FirstName,
+                    LastName = newAuthor.LastName,
+                    Email = newAuthor.Email,
+                    Image = newAuthor.Image,
+                    Favorite = newAuthor.Favorite,
+                    Uid = newAuthor.Uid,
+                };
+                db.Authors.Add(addAuthor);
+                db.SaveChanges();
+                return Results.Created($"author/{addAuthor.Id}", addAuthor);
 
+            });
 
             // UPDATE AUTHOR
+            app.MapPut("/authors", (SimplyBooksDbContext db, Author author, int authorId) =>
+            {
+                Author updateAuthor = db.Authors
+                .SingleOrDefault(a => a.Id == authorId);
+
+                if(updateAuthor == null)
+                {
+                    return Results.NotFound($"No author was found with the following id: {authorId}");
+                }
+
+                updateAuthor.FirstName = author.FirstName;
+                updateAuthor.LastName = author.LastName;
+                updateAuthor.Email = author.Email;
+                updateAuthor.Image = author.Image;
+                updateAuthor.Favorite = author.Favorite;
+                updateAuthor.Uid = author.Uid;
+
+                db.SaveChanges();
+                return Results.Ok(updateAuthor);
+
+            });
 
 
             // DELETE AUTHOR
+            app.MapDelete("/authors", (SimplyBooksDbContext db, int authorId) =>
+            {
+                Author authorToDelete = db.Authors
+                .SingleOrDefault(a => a.Id == authorId);
 
+                if (authorToDelete == null) 
+                {
+                    return Results.NotFound($"No author was found with the following id: {authorId}");
+                }
+                db.Authors.Remove(authorToDelete);
+                db.SaveChanges();
+                return Results.Ok(authorToDelete);
+            });
 
 
         }
