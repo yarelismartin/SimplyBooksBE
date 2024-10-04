@@ -1,4 +1,5 @@
-﻿using SimplyBooks.DTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using SimplyBooks.DTOs;
 
 namespace SimplyBooks.APIs
 {
@@ -27,11 +28,28 @@ namespace SimplyBooks.APIs
             // GET SINGLE 
             app.MapGet("/authors/{authorId}", (SimplyBooksDbContext db, int authorId) =>
             {
-
+                var author = db.Authors
+                .Include(author => author.Books)
+                .SingleOrDefault(author => author.Id == authorId);
+                if (author == null)
+                {
+                    return Results.NotFound("There was no author matching this id");
+                }
+                return Results.Ok(new
+                {
+                    author.Id, 
+                    author.FirstName,
+                    author.LastName,
+                    author.Email,
+                    author.Image,
+                    author.Favorite,
+                    author.Uid,
+                    Books = author.Books?.Select(book => new BookDto(book)).ToList()
+                });
             });
 
             // GET BY UID
-            app.MapGet("/authors/{uid}", (SimplyBooksDbContext db, string uid) =>
+            app.MapGet("/authors/user/{uid}", (SimplyBooksDbContext db, string uid) =>
             {
                 var allUserAuthors = db.Authors 
                 .Where(author => author.Uid == uid)
