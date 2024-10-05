@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimplyBooks.Data;
 using SimplyBooks.Models;
-using System.Runtime.CompilerServices;
-
 
 namespace SimplyBooks
 {

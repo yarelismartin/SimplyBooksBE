@@ -1,8 +1,7 @@
-using SimplyBooks.Models;
-using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Http.Json;
 using SimplyBooks;
+using SimplyBooks.APIs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +9,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
 
 // allows passing datetimes without time zone data 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
@@ -38,7 +47,7 @@ app.UseHttpsRedirection();
 app.UseCors();
 
 //BookAPI.Map(app);
-//AuthorAPI.Map(app);
+AuthorAPI.Map(app);
 
 app.Run();
 
