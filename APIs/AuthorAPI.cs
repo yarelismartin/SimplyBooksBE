@@ -118,6 +118,10 @@ namespace SimplyBooks.APIs
                 {
                     return Results.NotFound($"No author was found with the following id: {authorId}");
                 }
+
+                var booksToRemove = db.Books.Where(b => b.AuthorId == authorId).ToList();
+
+                db.Books.RemoveRange(booksToRemove);
                 db.Authors.Remove(authorToDelete);
                 db.SaveChanges();
                 return Results.Ok(authorToDelete);
