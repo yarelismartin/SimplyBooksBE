@@ -46,7 +46,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors();
 
-//BookAPI.Map(app);
+BookAPI.Map(app);
 AuthorAPI.Map(app);
 
 app.Run();
