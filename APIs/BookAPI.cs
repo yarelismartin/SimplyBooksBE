@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SimplyBooks.DTOs;
+using SimplyBooks.Models;
 
 namespace SimplyBooks.APIs
 {
@@ -67,12 +68,72 @@ namespace SimplyBooks.APIs
             });
 
             //CREATE BOOK
+            app.MapPost("/books", (SimplyBooksDbContext db, Book newBook) =>
+            {
+                if (!db.Authors.Any(a => a.Id == newBook.AuthorId))
+                {
+                    return Results.NotFound($"There are not authors with the following id: {newBook.AuthorId}");
+                }
+
+                Book book = new()
+                {
+                    Title = newBook.Title,
+                    Description = newBook.Description,
+                    AuthorId = newBook.AuthorId,
+                    Image = newBook.Image,
+                    Price = newBook.Price,
+                    Sale = newBook.Sale,
+                    Uid = newBook.Uid,
+
+                };
+                db.Books.Add(book);
+                db.SaveChanges();
+                return Results.Created($"/books/{newBook.Id}", newBook);
+            });
 
 
             //UPDATE BOOK
+            app.MapPut("/books", (SimplyBooksDbContext db, Book book, int bookId) =>
+            {
+                Book updateBook = db.Books.SingleOrDefault(b => b.Id == bookId);
+
+                if(updateBook == null)
+                {
+                    return Results.NotFound($"There is not book matching the following id: {bookId}");
+                }
+
+                else if (!db.Authors.Any(a => a.Id == book.AuthorId))
+                {
+                    return Results.NotFound($"There are not authors with the following id: {book.AuthorId}");
+                }
+
+
+                updateBook.Title = book.Title;
+                updateBook.Description = book.Description;
+                updateBook.AuthorId = book.AuthorId;
+                updateBook.Image = book.Image;
+                updateBook.Price = book.Price;
+                updateBook.Sale = book.Sale;
+
+                db.SaveChanges();
+                return Results.Ok(updateBook);
+            });
 
 
             //DELETE BOOK
+            app.MapDelete("/books", (SimplyBooksDbContext db, int bookId) =>
+            {
+                Book removeBook = db.Books.SingleOrDefault(b => b.Id == bookId);
+
+                if (removeBook == null)
+                {
+                    return Results.NotFound($"There is not book with the following id: {bookId}");
+                }
+
+                db.Books.Remove(removeBook);
+                db.SaveChanges();
+                return Results.Ok(removeBook);
+            });
         }
     }
 }
