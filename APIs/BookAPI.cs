@@ -125,6 +125,8 @@ namespace SimplyBooks.APIs
             {
                 Book removeBook = db.Books.SingleOrDefault(b => b.Id == bookId);
 
+  
+
                 if (removeBook == null)
                 {
                     return Results.NotFound($"There is not book with the following id: {bookId}");
