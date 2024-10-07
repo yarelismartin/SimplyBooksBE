@@ -6,8 +6,10 @@ Simply Books is a C# backend API application designed to manage books and author
 
 - [Get Started](#get-started)
 - [Features](#features)
+- [Planning](#planning)
 - [API Endpoints](#api-endpoints)
 - [Postman Documentation](#postman-documentation)
+- [Video API Walkthrough](#video-api-walkthrough)
 - [Tech Stack](#tech-stack)
 - [Contributors](#contributors)
 
@@ -58,6 +60,9 @@ Use **Postman** or Swagger UI to interact with the API and test CRUD operations 
 - Users can **Create**, **Read**, **Update**, and **Delete** both books and authors.
 - Comprehensive API documentation is available.
 
+## Planning
+- [Project Board](https://github.com/users/yarelismartin/projects/12/views/1)
+
 ## API Endpoints
 
 | Method | Endpoint                    | Description                           |
@@ -80,6 +85,9 @@ Use **Postman** or Swagger UI to interact with the API and test CRUD operations 
 The API documentation is available in Postman, providing a detailed guide on how to interact with the Simply Books API.
 
 - [Simply Books API Documentation](https://documenter.getpostman.com/view/31992966/2sAXxMhDxo)
+
+## Video API Walkthrough
+
 
 ## Tech Stack
 
