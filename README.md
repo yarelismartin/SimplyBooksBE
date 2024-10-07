@@ -15,19 +15,43 @@ Simply Books is a C# backend API application designed to manage books and author
 
 ## Get Started
 
-Clone this repository and execute the following commands to set up the project:
+Follow these steps to set up the **Simply Books API**:
+
+#### 1. Fork and Clone the Repository
+Fork the repository, then clone it to your local machine.
+
+#### 2. Open in Visual Studio 2022
+Open the solution file (`.sln`) in **Visual Studio 2022**.
+
+#### 3. Restore Dependencies
+Run the following command to restore project dependencies:
 
 ```bash
-dotnet build
+dotnet restore
 ```
 
-```bash
-dotnet publish
-```
+#### 4. Configure User Secrets
+Initialize user secrets and set your PostgreSQL connection string:
 
 ```bash
-dotnet run
+dotnet user-secrets init
+dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Host=localhost;Database=SimplyBooksDB;Username=postgres;Password=<your_postgresql_password>"
 ```
+
+Replace `<your_postgresql_password>` with your actual database password.
+
+#### 5. Apply Migrations and Create the Database
+Run the following command to apply the existing migrations and create the database:
+
+```bash
+dotnet ef database update
+```
+
+#### 6. Start Debugging
+Run the project in debug mode by selecting the **Start Debugging** option in Visual Studio. This will launch the API, and you can access Swagger to test the endpoints.
+
+#### 7. Test the API
+Use **Postman** or Swagger UI to interact with the API and test CRUD operations for books and authors.
 
 ## Features
 
@@ -66,4 +90,4 @@ The API documentation is available in Postman, providing a detailed guide on how
 
 ## Contributors
 
-- [Your Name](https://github.com/your-github-url)
+- [Yarelis Martin](https://github.com/yarelismartin)
