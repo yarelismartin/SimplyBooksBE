@@ -93,7 +93,7 @@ The API documentation is available in Postman, providing a detailed guide on how
 - [Simply Books API Documentation](https://documenter.getpostman.com/view/31992966/2sAXxMhDxo)
 
 ## Video API Walkthrough
-
+https://www.loom.com/share/d1bab4cf245f4b149bb694e9aee88254
 
 ## Tech Stack
 
