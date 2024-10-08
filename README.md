@@ -17,8 +17,14 @@ Simply Books is a C# backend API application designed to manage books and author
 
 ## Get Started
 
-Follow these steps to set up the **Simply Books API**:
 
+#### For this project to run successfully, you'll need the following:
+
+- Visual Studio
+- .NET
+- pgAdmin
+
+Follow these steps to set up the **Simply Books API**:
 #### 1. Fork and Clone the Repository
 Fork the repository, then clone it to your local machine.
 
